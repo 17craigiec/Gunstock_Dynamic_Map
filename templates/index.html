@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock%}
+
+{% block body %}
+<body>
+    <div>
+        <h1>Gunstock Dynamic Trail Map</h1>
+        <p>By: Connor Craigie & Ilona Regan</p>
+    </div>
+
+    <div id="images-div" class="clsImageDiv">
+        <!--Gunstock map image-->
+        <img src="/static/images/gunstock_flat_colored_map.png" alt="Map Not Retrieved" class="clsGunstockMap">
+
+        <!--Other Images-->
+        <script>
+            var images = ["Birch_Glades.png", "Blundersmoke.png", "Cannonball.png", "Daisy.png", "Derringer.png", "Exit_20.png", "Flintlock.png", "Flintlock_Chute.png", "Flintlock_Extension.png", "Gunpowder.png",
+            "Gunpowder_Glades.png", "Hot_Shot.png", "Lower_Gunsmoke.png", "Lower_Recoil.png", "Lower_Trigger.png", "Middle_Gunsmoke.png", "Middle_Recoil.png", "Middle_Trigger.png", "Musket.png", "Out_of_Sight.png",
+            "Parallax_Glades.png", "Peepsight.png", "Pennys_Playground.png", "Phelps.png", "Pistol.png", "Pop_Gun.png", "Ramrod_Race.png", "Lower_Recoil_Glades.png", "Redhat.png","Red_Ryder.png", "Ricochet.png",
+            "Shotgun.png", "Sidearm.png", "Slingshot.png", "Smith.png", "Stonebar.png", "Tiger.png", "Tiger_Steeps.png", "Tinderbox.png", "Trigger_Chute.png", "Trigger_Link.png", "Try_Me.png",
+            "Upper_Cannonball.png", "Upper_Gunsmoke.png", "Upper_Ramrod.png", "Upper_Recoil.png", "Upper_Trigger.png"];
+
+            for(i = 0; i < images.length; i++)
+            {
+                document.getElementById("images-div").innerHTML += "<img id=" + images[i] + " src='/static/images/overlays/"+ images[i] + "' class='clsImages' style='visibility:hidden' >";
+                // console.log(images[i] + ": " +document.getElementById(images[i]).style.visibility);
+            }
+
+            trails_status = JSON.parse('{{trails_status | tojson}}');
+            console.log(trails_status);
+
+            for(i = 0; i < images.length; i++){
+                temp_status = trails_status[images[i]];
+                console.log(images[i] + " : " + temp_status);
+                if(temp_status){
+                    document.getElementById(images[i]).style.visibility = 'visible';
+                    console.log("Hello");
+                }
+            }
+
+        </script>
+    </div>
+</body>
+{% endblock %}
